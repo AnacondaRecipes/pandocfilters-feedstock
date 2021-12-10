@@ -1,6 +1,6 @@
 {% set name = "pandocfilters" %}
-{% set version = "1.4.3" %}
-{% set sha256 = "bc63fbb50534b4b1f8ebe1860889289e8af94a23bff7445259592df25a3906eb" %}
+{% set version = "1.5.0" %}
+{% set sha256 = "0b679503337d233b4339a817bfc8c50064e2eff681314376a47cb582305a7a38" %}
 
 package:
   name: {{ name }}
@@ -12,19 +12,28 @@ source:
   sha256: {{ sha256 }}
 
 build:
-  number: 1
+  number: 0
+  skip: True  # [py<36]
   script: pip install --no-deps .
 
 requirements:
   host:
     - python
     - pip
+    - wheel
+    - setuptools
   run:
-    - python
+    - python >=3.6
 
 test:
   imports:
     - pandocfilters
+  requires:
+    - pip
+    - python <3.10
+  commands:
+    - pip check
+
 
 about:
   home: https://github.com/jgm/pandocfilters
@@ -34,6 +43,8 @@ about:
   summary: 'A python module for writing pandoc filters'
 
   dev_url: https://github.com/jgm/pandocfilters
+  # the documentation was updated according to pypi.org
+  doc_url: https://pandoc.org/filters.html
 
 extra:
   recipe-maintainers:
