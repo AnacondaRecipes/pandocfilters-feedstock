@@ -23,14 +23,13 @@ requirements:
     - wheel
     - setuptools
   run:
-    - python >=3.6
+    - python
 
 test:
   imports:
     - pandocfilters
   requires:
     - pip
-    - python <3.10
   commands:
     - pip check
 
