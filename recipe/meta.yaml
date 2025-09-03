@@ -1,20 +1,18 @@
 {% set name = "pandocfilters" %}
-{% set version = "1.5.0" %}
-{% set sha256 = "0b679503337d233b4339a817bfc8c50064e2eff681314376a47cb582305a7a38" %}
+{% set version = "1.5.1" %}
 
 package:
-  name: {{ name }}
+  name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ sha256 }}
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 002b4a555ee4ebc03f8b66307e287fa492e4a77b4ea14d3f934328297bb4939e
 
 build:
   number: 0
-  noarch: python
-  script: pip install --no-deps .
+  skip: true # [py<34]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
@@ -23,27 +21,28 @@ requirements:
     - wheel
     - setuptools
   run:
-    # The package is not supported for the versions 3.0 to 3.3 of python
-    # https://github.com/jgm/pandocfilters/blob/master/setup.py#L19
-    - python !=3.0,!=3.1,!=3.2,!=3.3
+    - python
 
 test:
   imports:
     - pandocfilters
   requires:
     - pip
-    - python <3.10
+    - python
   commands:
     - pip check
-
 
 about:
   home: https://github.com/jgm/pandocfilters
   license: BSD-3-Clause
   license_family: BSD
   license_file: LICENSE
-  summary: 'A python module for writing pandoc filters'
-
+  summary: A python module for writing pandoc filters
+  description: |
+    Pandoc consists of a set of readers and writers. When converting a document
+    from one format to another, text is parsed by a reader into pandoc's
+    intermediate representation of the document—an “abstract syntax tree” or
+    AST—which is then converted by the writer into the target format.
   dev_url: https://github.com/jgm/pandocfilters
   # the documentation was updated according to pypi.org
   doc_url: https://pandoc.org/filters.html
