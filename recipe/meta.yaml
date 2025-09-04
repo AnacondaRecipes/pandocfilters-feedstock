@@ -44,7 +44,6 @@ about:
     intermediate representation of the document—an “abstract syntax tree” or
     AST—which is then converted by the writer into the target format.
   dev_url: https://github.com/jgm/pandocfilters
-  # the documentation was updated according to pypi.org
   doc_url: https://pandoc.org/filters.html
 
 extra:
